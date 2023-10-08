@@ -1,3 +1,8 @@
+// Load external data and boot
+d3.queue()
+  .defer(d3.json, "Data/mapdata.json")
+  .defer(d3.csv, "Data/gini.csv")
+  .await(ready);
 // The svg
 var svg = d3.select("svg"),
   width = +svg.attr("width"),
@@ -14,20 +19,14 @@ var projection = d3
 var data = d3.map();
 var colorScale = d3
   .scaleThreshold()
-  .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
+  .domain([10, 20, 30, 40, 50, 60, 70, 80, 90, 100]) // Schwellenwerte im Bereich von 1 bis 100
   .range(d3.schemeBlues[7]);
-
-// Load external data and boot
-d3.queue()
-  .defer(d3.json, "Data/mapdata.json")
-  .defer(d3.csv, "Data/gini.csv")
-  .await(ready);
 
 function ready(error, topo, gini) {
   // Hier wird die GINI-Map aus den geladenen Daten erstellt
   var giniMap = d3.map();
   gini.forEach(function (d) {
-    giniMap.set(d["Country Code"], +d["Value"]);
+    giniMap.set(d["Country Code"], +d["Value"], +d["Year"], +d["Country Name"]);
   });
 
   let mouseOver = function (d) {
@@ -65,4 +64,48 @@ function ready(error, topo, gini) {
     .style("opacity", 0.8)
     .on("mouseover", mouseOver)
     .on("mouseleave", mouseLeave);
+}
+// Funktion zur Aktualisierung der GINI-Map basierend auf dem ausgewählten Jahr
+function updateYear(selectedYear) {
+  // Event-Listener für Änderungen am Slider-Wert
+  var slider = document.getElementById("yearSlider");
+
+  slider.addEventListener("input", function () {
+    var selectedYear = this.value;
+    updateYear(selectedYear);
+  });
+
+  // Funktion zur Aktualisierung der GINI-Map basierend auf dem ausgewählten Jahr
+  function updateYear(selectedYear) {
+    // Das ausgewählte Jahr im HTML-Dokument aktualisieren
+    document.getElementById("selectedYear").textContent =
+      "Selected Year: " + selectedYear;
+
+    // Daten filtern, um nur Daten für das ausgewählte Jahr zu behalten
+    var filteredData = gini.filter(function (d) {
+      return +d["Year"] === +selectedYear;
+    });
+
+    // Ein leeres Objekt erstellen, um die GINI-Werte pro Land zu speichern
+    var giniValues = {};
+
+    // Daten in das Objekt speichern
+    filteredData.forEach(function (d) {
+      giniValues[d["Country Code"]] = +d["Value"];
+    });
+
+    // Daten neu zeichnen
+    svg.selectAll("path").attr("fill", function (d) {
+      // GINI-Wert für das ausgewählte Land finden
+      var giniValue = giniValues[d.id];
+
+      // Wenn ein Wert gefunden wurde, die Kartenfarbe aktualisieren
+      if (giniValue) {
+        return colorScale(giniValue);
+      } else {
+        // Wenn kein Wert gefunden wurde, eine Standardfarbe verwenden
+        return "gray"; // Ändern Sie dies nach Bedarf
+      }
+    });
+  }
 }

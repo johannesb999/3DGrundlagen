@@ -1,3 +1,70 @@
 html {
   background-color: black;
+  font-family: "Dela Gothic One", cursive;
+}
+#map {
+  /* border: solid 1px #ffffff; */
+  margin-bottom: 20px;
+}
+
+#sliderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Zentrierung der Elemente vertikal */
+}
+
+input[type="range"] {
+  width: 100%; /* Breite des Sliders */
+  height: 1px; /* Höhe des Sliders */
+  background-color: #ffffff; /* Hintergrundfarbe des Sliders */
+  border: none; /* Kein Rand */
+  border-radius: 5px; /* Abrundung der Ecken */
+  outline: none; /* Entfernt den blauen Rand bei Fokus */
+  margin: 0 auto; /* Zentriert den Slider horizontal */
+  position: relative; /* Position relativ für die Striche */
+}
+/* Fügt Striche auf dem Slider hinzu */
+#sliderLabels {
+  display: flex;
+  width: 100%; /* Breite des Containers auf 100% setzen */
+  justify-content: space-between; /* Abstand zwischen den Jahreszahlen */
+  color: rgb(93, 195, 235); /* Farbe der Jahreszahlen */
+  margin-top: 10px; /* Abstand von oben */
+  position: relative; /* Position relativ für die Pseudo-Elemente */
+  align-items: center; /* Zentrierung der Jahreszahlen horizontal */
+}
+
+#sliderLabels span {
+  text-align: center; /* Zentrierte Ausrichtung */
+}
+
+/* Positioniert die Striche und zeigt die Jahreszahlen */
+input[type="range"]::before {
+  content: ""; /* Leeres Inhaltselement */
+  width: 1px; /* Breite des Strichs */
+  height: 10px; /* Höhe des Strichs */
+  background-color: #ffffff; /* Farbe des Strichs */
+  position: absolute; /* Position absolut */
+  top: -12px; /* Position oben */
+  left: calc(
+    (100% / 18) * var(--tick)
+  ); /* Positionierung anhand des Datenattributs */
+}
+
+input[type="range"]::after {
+  content: attr(data-year); /* Verwenden Sie das Datenattribut für das Jahr */
+  color: white; /* Farbe der Jahreszahl */
+  position: absolute; /* Position absolut */
+  top: -25px;
+}
+
+#selectedYear {
+  color: white;
+  font-size: 20px;
+  margin-top: 10px;
+}
+#title {
+  color: white;
+  font-size: 50px;
+  margin-top: 10px;
 }
