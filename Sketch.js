@@ -42,7 +42,16 @@ function ready(error, topo, gini) {
     d3.selectAll(".Country").transition().duration(10).style("opacity", 0.5);
     d3.select(this).transition().duration(10).style("stroke", "transparent");
   };
+  function clickCountry(d) {
+    // Hier können Sie die Daten des geklickten Landes in der Konsole anzeigen
+    var countryCode = d.properties["ISO_A2"];
+    var giniValue = giniMap.get(countryCode);
+    var countryName = d.properties["NAME"];
 
+    console.log("Country Code: " + countryCode);
+    console.log("Country Name: " + countryName);
+    console.log("Gini Value: " + giniValue);
+  }
   // Draw the map
   svg
     .append("g")
@@ -50,8 +59,10 @@ function ready(error, topo, gini) {
     .data(topo.features)
     .enter()
     .append("path")
+
     // draw each country
     .attr("d", d3.geoPath().projection(projection))
+
     // set the color of each country
     .attr("fill", function (d) {
       var giniValue = giniMap.get(d.id);
@@ -65,47 +76,38 @@ function ready(error, topo, gini) {
     .on("mouseover", mouseOver)
     .on("mouseleave", mouseLeave);
 }
+
 // Funktion zur Aktualisierung der GINI-Map basierend auf dem ausgewählten Jahr
 function updateYear(selectedYear) {
-  // Event-Listener für Änderungen am Slider-Wert
+  // Das ausgewählte Jahr im HTML-Dokument aktualisieren
   var slider = document.getElementById("yearSlider");
+  document.getElementById("selectedYear").textContent =
+    "Selected Year: " + selectedYear;
 
-  slider.addEventListener("input", function () {
-    var selectedYear = this.value;
-    updateYear(selectedYear);
+  // Daten filtern, um nur Daten für das ausgewählte Jahr zu behalten
+  var filteredData = gini.filter(function (d) {
+    return +d["Year"] === +selectedYear;
   });
 
-  // Funktion zur Aktualisierung der GINI-Map basierend auf dem ausgewählten Jahr
-  function updateYear(selectedYear) {
-    // Das ausgewählte Jahr im HTML-Dokument aktualisieren
-    document.getElementById("selectedYear").textContent =
-      "Selected Year: " + selectedYear;
+  // Ein leeres Objekt erstellen, um die GINI-Werte pro Land zu speichern
+  var giniValues = {};
 
-    // Daten filtern, um nur Daten für das ausgewählte Jahr zu behalten
-    var filteredData = gini.filter(function (d) {
-      return +d["Year"] === +selectedYear;
-    });
+  // Daten in das Objekt speichern
+  filteredData.forEach(function (d) {
+    giniValues[d["Country Code"]] = +d["Value"];
+  });
 
-    // Ein leeres Objekt erstellen, um die GINI-Werte pro Land zu speichern
-    var giniValues = {};
+  // Daten neu zeichnen
+  svg.selectAll("path").attr("fill", function (d) {
+    // GINI-Wert für das ausgewählte Land finden
+    var giniValue = giniValues[d.id];
 
-    // Daten in das Objekt speichern
-    filteredData.forEach(function (d) {
-      giniValues[d["Country Code"]] = +d["Value"];
-    });
-
-    // Daten neu zeichnen
-    svg.selectAll("path").attr("fill", function (d) {
-      // GINI-Wert für das ausgewählte Land finden
-      var giniValue = giniValues[d.id];
-
-      // Wenn ein Wert gefunden wurde, die Kartenfarbe aktualisieren
-      if (giniValue) {
-        return colorScale(giniValue);
-      } else {
-        // Wenn kein Wert gefunden wurde, eine Standardfarbe verwenden
-        return "gray"; // Ändern Sie dies nach Bedarf
-      }
-    });
-  }
+    // Wenn ein Wert gefunden wurde, die Kartenfarbe aktualisieren
+    if (giniValue) {
+      return colorScale(giniValue);
+    } else {
+      // Wenn kein Wert gefunden wurde, eine Standardfarbe verwenden
+      return "gray"; // Ändern Sie dies nach Bedarf
+    }
+  });
 }
