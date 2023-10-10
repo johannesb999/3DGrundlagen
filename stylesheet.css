@@ -5,8 +5,8 @@ html {
 
 #contents {
   display: grid;
-  grid-template-columns: auto 80%;
-  grid-template-rows: 1fr auto;
+  grid-template-columns: auto;
+  grid-template-rows: 1fr auto auto;
   border: 2px solid blue;
 }
 
@@ -38,7 +38,7 @@ html {
 #farbzuordnung {
   border: 2px solid lightcoral;
   position: absolute;
-  bottom: 0%;
+  bottom: 0;
   grid-column: 1 1;
 }
 
@@ -116,7 +116,7 @@ input[type="range"]::after {
 #selectedYear {
   color: white;
   font-size: 20px;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 #title {
   color: white;
