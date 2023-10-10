@@ -27,40 +27,44 @@
     <script src="Sketch.js" defer></script>
   </head>
   <body>
+    <div id="contents">
     <!-- Create an element where the map will take place -->
     <svg
       id="map"
       width="1500"
-      height="900"
+      height="700"
       style="display: block; margin: auto; background-color: black"
     ></svg>
 
     <!-- Create an element where the legend will take place -->
-    <div id="legend">
+    
+      <div id="farbzuordnung">
       <div class="legend-item">
-        <div class="legend-color" style="background-color: black"></div>
-        <div class="legend-label" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">GINI</div>
+
+        <div class="legend-color" style="background-color: #000000"></div>
+        <div class="legend-label">GINI</div>
       </div>
       <div class="legend-item">
         <div class="legend-color" style="background-color: #57e6ff"></div>
-        <div class="legend-label" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">1 to 2</div>
+        <div class="legend-label">1 to 2</div>
       </div>
       <div class="legend-item">
         <div class="legend-color" style="background-color: #4bc6db"></div>
-        <div class="legend-label" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">3 to 4</div>
+        <div class="legend-label">3 to 4</div>
       </div>
       <div class="legend-item">
         <div class="legend-color" style="background-color: #45b8cc"></div>
-        <div class="legend-label" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">5 to 6</div>
+        <div class="legend-label">5 to 6</div>
       </div>
       <div class="legend-item">
         <div class="legend-color" style="background-color: #318391"></div>
-        <div class="legend-label" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">7 to 8</div>
+        <div class="legend-label">7 to 8</div>
       </div>
       <div class="legend-item">
         <div class="legend-color" style="background-color: #245e69"></div>
-        <div class="legend-label" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">9 to 1</div>
+        <div class="legend-label">9 to 10</div>
       </div>
+      <br>
       <div class="legend-item">
         <div class="legend-color" style="background-color: #d7cd41"></div>
         <div class="legend-label" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Crime</div>
@@ -69,6 +73,7 @@
         <div class="legend-color" style="background-color: #89b277"></div>
         <div class="legend-label" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Happiness</div>
       </div>
+    </div>
     <span data-year="2005">2005</span>
 
     <!-- Create an element where the Slider will take place -->
@@ -109,6 +114,8 @@
     <!-- Anzeige des ausgewählten Jahres -->
     <div id="selectedYear">Selected Year:</div>
   </body>
+</div>
+</div>
   <footer>
     <div id="title">Crime to GINI-Index</div>
   </footer>

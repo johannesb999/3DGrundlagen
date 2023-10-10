@@ -15,7 +15,7 @@ var path = d3.geoPath();
 var projection = d3
   .geoMercator()
   .scale(150)
-  .center([0, 20])
+  .center([0, 40])
   .translate([width / 2, height / 2]);
 
 // Data and color scale
