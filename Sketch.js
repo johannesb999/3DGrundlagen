@@ -1,7 +1,7 @@
 // Load external data and boot
 d3.queue()
   .defer(d3.json, "Data/mapdata.json")
-  .defer(d3.csv, "Data/gini1.csv")
+  .defer(d3.csv, "Data/ginihaupt.csv")
   .defer(d3.csv, "Data/crimeRate.csv")
   .await(ready);
 
@@ -107,7 +107,7 @@ function updateYear(selectedYear) {
   filteredData.forEach(function (d) {
     giniValues[d["Country Code"]] = +d["Value"];
   });
-  // Karte neu zeichnen
+  // Daten neu zeichnen
   svg.selectAll("path").attr("fill", function (d) {
     var giniValue = giniValues[d.id];
     if (giniValue) {
