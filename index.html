@@ -27,6 +27,7 @@
     <script src="Sketch.js" defer></script>
   </head>
   <body>
+    <div id="contents">
     <!-- Create an element where the map will take place -->
     <svg
       id="map"
@@ -36,7 +37,8 @@
     ></svg>
 
     <!-- Create an element where the legend will take place -->
-    <div id="legend">
+    
+      <div id="farbzuordnung">
       <div class="legend-item">
         <div class="legend-color" style="background-color: #ffffff"></div>
         <div class="legend-label">GINI</div>
@@ -69,6 +71,7 @@
         <div class="legend-color" style="background-color: #89b277"></div>
         <div class="legend-label">Happiness</div>
       </div>
+    </div>
     <span data-year="2005">2005</span>
 
     <!-- Create an element where the Slider will take place -->
@@ -109,6 +112,8 @@
     <!-- Anzeige des ausgewählten Jahres -->
     <div id="selectedYear">Selected Year:</div>
   </body>
+</div>
+</div>
   <footer>
     <div id="title">Crime to GINI-Index</div>
   </footer>
