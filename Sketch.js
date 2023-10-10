@@ -107,7 +107,7 @@ function updateYear(selectedYear) {
   filteredData.forEach(function (d) {
     giniValues[d["Country Code"]] = +d["Value"];
   });
-  // Daten neu zeichnen
+  // Karte neu zeichnen
   svg.selectAll("path").attr("fill", function (d) {
     var giniValue = giniValues[d.id];
     if (giniValue) {
