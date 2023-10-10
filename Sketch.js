@@ -1,7 +1,7 @@
 // Load external data and boot
 d3.queue()
   .defer(d3.json, "Data/mapdata.json")
-  .defer(d3.csv, "Data/gini.csv")
+  .defer(d3.csv, "Data/gini1.csv")
   .defer(d3.csv, "Data/crimeRate.csv")
   .await(ready);
 
